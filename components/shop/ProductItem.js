@@ -29,15 +29,18 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   details: {
+    fontFamily: 'open-sans',
     alignItems: 'center',
     height: '15%',
     padding: 10,
   },
   title: {
+    fontFamily: 'open-sans-bold',
     fontSize: 18,
-    marginVertical: 4,
+    marginVertical: 2,
   },
   price: {
+    fontFamily: 'open-sans-bold',
     fontSize: 14,
     color: '#888',
   },
