@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Text, View } from 'react-native';
-import { createStore, combineReducers } from 'redux';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import ReduxThunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import AppLoading from 'expo-app-loading';
 import * as Font from 'expo-font';
@@ -17,7 +17,7 @@ const rootReducer = combineReducers({
 });
 
 // const store = createStore(rootReducer, composeWithDevTools());
-const store = createStore(rootReducer);
+const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
 
 const fetchFonts = () => Font.loadAsync({
   'open-sans': require('./assets/fonts/OpenSans-Regular.ttf'),
