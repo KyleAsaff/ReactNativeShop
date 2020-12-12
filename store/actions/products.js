@@ -13,7 +13,7 @@ export const fetchProducts = () => async (dispatch) => {
     );
 
     if (!response.ok) {
-      throw new Error('Something went wrong');
+      throw new Error('Something went wrong!');
     }
 
     const resData = await response.json();
@@ -31,15 +31,28 @@ export const fetchProducts = () => async (dispatch) => {
         ),
       );
     }
+
     dispatch({ type: SET_PRODUCTS, products: loadedProducts });
   } catch (err) {
-  // send to custom analytics server etc.
-    console.warn(err);
+    // send to custom analytics server
     throw err;
   }
 };
 
-export const deleteProduct = (productId) => ({ type: DELETE_PRODUCT, pid: productId });
+export const deleteProduct = (productId) => async (dispatch) => {
+  const response = await fetch(
+    `https://reactnativeshop-6be78-default-rtdb.firebaseio.com/products/${productId}.json`,
+    {
+      method: 'DELETE',
+    },
+  );
+
+  if (!response.ok) {
+    throw new Error('Somethingwent wrong!');
+  }
+
+  dispatch({ type: DELETE_PRODUCT, pid: productId });
+};
 
 export const createProduct = (title, description, imageUrl, price) => async (dispatch) => {
   // any async code you want!
@@ -73,12 +86,33 @@ export const createProduct = (title, description, imageUrl, price) => async (dis
   });
 };
 
-export const updateProduct = (id, title, description, imageUrl) => ({
-  type: UPDATE_PRODUCT,
-  pid: id,
-  productData: {
-    title,
-    description,
-    imageUrl,
-  },
-});
+export const updateProduct = (id, title, description, imageUrl) => async (dispatch) => {
+  const response = await fetch(
+    `https://reactnativeshop-6be78-default-rtdb.firebaseio.com/products/${id}.json`,
+    {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        title,
+        description,
+        imageUrl,
+      }),
+    },
+  );
+
+  if (!response.ok) {
+    throw new Error('Somethingwent wrong!');
+  }
+
+  dispatch({
+    type: UPDATE_PRODUCT,
+    pid: id,
+    productData: {
+      title,
+      description,
+      imageUrl,
+    },
+  });
+};
