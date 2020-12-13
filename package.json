@@ -8,13 +8,13 @@
     "eject": "expo eject"
   },
   "dependencies": {
-    "@expo/vector-icons": "^12.0.2",
+    "@expo/vector-icons": "^12.0.0",
     "@react-native-community/masked-view": "0.1.10",
     "@react-navigation/compat": "^5.3.10",
     "expo": "^40.0.0",
     "expo-app-loading": "^1.0.0",
-    "expo-font": "^8.4.0",
-    "expo-linear-gradient": "^8.4.0",
+    "expo-font": "~8.4.0",
+    "expo-linear-gradient": "~8.4.0",
     "moment": "^2.29.1",
     "react": "16.13.1",
     "react-dom": "16.13.1",
@@ -34,7 +34,7 @@
     "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.10",
+    "@babel/core": "~7.9.0",
     "@react-native-community/eslint-config": "^2.0.0",
     "babel-preset-expo": "8.3.0",
     "eslint": "^7.15.0",

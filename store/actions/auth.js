@@ -48,7 +48,7 @@ export const signup = (email, password) => async (dispatch) => {
     ),
   );
   const expirationDate = new Date(
-    new Date().getTime() + parseInt(resData.expiresIn) * 1000,
+    new Date().getTime() + parseInt(resData.expiresIn),
   );
   saveDataToStorage(resData.idToken, resData.localId, expirationDate);
 };
