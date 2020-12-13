@@ -5,12 +5,16 @@ import { Provider } from 'react-redux';
 import AppLoading from 'expo-app-loading';
 import * as Font from 'expo-font';
 // import { composeWithDevTools } from 'redux-devtools-extension';
+import * as Notifications from 'expo-notifications';
 import productsReducer from './store/reducers/products';
 import cartReducer from './store/reducers/cart';
 import ordersReducer from './store/reducers/orders';
 import authReducer from './store/reducers/auth';
-import ShopNavigator from './navigation/ShopNavigator';
 import AppNavigator from './navigation/AppNavigator';
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({ shouldShowAlert: true }),
+});
 
 const rootReducer = combineReducers({
   products: productsReducer,
