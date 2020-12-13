@@ -5,7 +5,7 @@ import {
   Text,
   Platform,
   ActivityIndicator,
-  StyleSheet
+  StyleSheet,
 } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
@@ -15,10 +15,10 @@ import OrderItem from '../../components/shop/OrderItem';
 import * as ordersActions from '../../store/actions/orders';
 import Colors from '../../constants/Colors';
 
-const OrdersScreen = props => {
+const OrdersScreen = (props) => {
   const [isLoading, setIsLoading] = useState(false);
 
-  const orders = useSelector(state => state.orders.orders);
+  const orders = useSelector((state) => state.orders.orders);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -47,8 +47,8 @@ const OrdersScreen = props => {
   return (
     <FlatList
       data={orders}
-      keyExtractor={item => item.id}
-      renderItem={itemData => (
+      keyExtractor={(item) => item.id}
+      renderItem={(itemData) => (
         <OrderItem
           amount={itemData.item.totalAmount}
           date={itemData.item.readableDate}
@@ -59,29 +59,27 @@ const OrdersScreen = props => {
   );
 };
 
-OrdersScreen.navigationOptions = navData => {
-  return {
-    headerTitle: 'Your Orders',
-    headerLeft: (
-      <HeaderButtons HeaderButtonComponent={HeaderButton}>
-        <Item
-          title="Menu"
-          iconName={Platform.OS === 'android' ? 'md-menu' : 'ios-menu'}
-          onPress={() => {
-            navData.navigation.toggleDrawer();
-          }}
-        />
-      </HeaderButtons>
-    )
-  };
-};
+export const screenOptions = (navData) => ({
+  headerTitle: 'Your Orders',
+  headerLeft: () => (
+    <HeaderButtons HeaderButtonComponent={HeaderButton}>
+      <Item
+        title="Menu"
+        iconName={Platform.OS === 'android' ? 'md-menu' : 'ios-menu'}
+        onPress={() => {
+          navData.navigation.toggleDrawer();
+        }}
+      />
+    </HeaderButtons>
+  ),
+});
 
 const styles = StyleSheet.create({
   centered: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
-  }
+    alignItems: 'center',
+  },
 });
 
 export default OrdersScreen;

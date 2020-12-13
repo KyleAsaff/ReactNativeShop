@@ -1,5 +1,7 @@
 import React from 'react';
-import { View, Text, FlatList, Button, Platform, Alert } from 'react-native';
+import {
+  View, Text, FlatList, Button, Platform, Alert,
+} from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 
@@ -8,15 +10,15 @@ import ProductItem from '../../components/shop/ProductItem';
 import Colors from '../../constants/Colors';
 import * as productsActions from '../../store/actions/products';
 
-const UserProductsScreen = props => {
-  const userProducts = useSelector(state => state.products.userProducts);
+const UserProductsScreen = (props) => {
+  const userProducts = useSelector((state) => state.products.userProducts);
   const dispatch = useDispatch();
 
-  const editProductHandler = id => {
+  const editProductHandler = (id) => {
     props.navigation.navigate('EditProduct', { productId: id });
   };
 
-  const deleteHandler = id => {
+  const deleteHandler = (id) => {
     Alert.alert('Are you sure?', 'Do you really want to delete this item?', [
       { text: 'No', style: 'default' },
       {
@@ -24,8 +26,8 @@ const UserProductsScreen = props => {
         style: 'destructive',
         onPress: () => {
           dispatch(productsActions.deleteProduct(id));
-        }
-      }
+        },
+      },
     ]);
   };
 
@@ -40,8 +42,8 @@ const UserProductsScreen = props => {
   return (
     <FlatList
       data={userProducts}
-      keyExtractor={item => item.id}
-      renderItem={itemData => (
+      keyExtractor={(item) => item.id}
+      renderItem={(itemData) => (
         <ProductItem
           image={itemData.item.imageUrl}
           title={itemData.item.title}
@@ -68,32 +70,30 @@ const UserProductsScreen = props => {
   );
 };
 
-UserProductsScreen.navigationOptions = navData => {
-  return {
-    headerTitle: 'Your Products',
-    headerLeft: (
-      <HeaderButtons HeaderButtonComponent={HeaderButton}>
-        <Item
-          title="Menu"
-          iconName={Platform.OS === 'android' ? 'md-menu' : 'ios-menu'}
-          onPress={() => {
-            navData.navigation.toggleDrawer();
-          }}
-        />
-      </HeaderButtons>
-    ),
-    headerRight: (
-      <HeaderButtons HeaderButtonComponent={HeaderButton}>
-        <Item
-          title="Add"
-          iconName={Platform.OS === 'android' ? 'md-create' : 'ios-create'}
-          onPress={() => {
-            navData.navigation.navigate('EditProduct');
-          }}
-        />
-      </HeaderButtons>
-    )
-  };
-};
+export const screenOptions = (navData) => ({
+  headerTitle: 'Your Products',
+  headerLeft: () => (
+    <HeaderButtons HeaderButtonComponent={HeaderButton}>
+      <Item
+        title="Menu"
+        iconName={Platform.OS === 'android' ? 'md-menu' : 'ios-menu'}
+        onPress={() => {
+          navData.navigation.toggleDrawer();
+        }}
+      />
+    </HeaderButtons>
+  ),
+  headerRight: () => (
+    <HeaderButtons HeaderButtonComponent={HeaderButton}>
+      <Item
+        title="Add"
+        iconName={Platform.OS === 'android' ? 'md-create' : 'ios-create'}
+        onPress={() => {
+          navData.navigation.navigate('EditProduct');
+        }}
+      />
+    </HeaderButtons>
+  ),
+});
 
 export default UserProductsScreen;
